@@ -10,7 +10,7 @@
 # Calculating bias and variance
 # -----------------------------
 
-# In[11]:
+# In[1]:
 
 get_ipython().magic(u'matplotlib inline')
 from numpy.linalg import norm
@@ -18,7 +18,7 @@ import numpy as np
 import pylab as pl
 
 
-# In[35]:
+# In[1]:
 
 def f(size):
     x = np.linspace(0, 5, size)
@@ -30,8 +30,27 @@ def sample(size):
     return (x,y)
 
 
-# In[37]:
+# In[2]:
 
+from sklearn.linear_model import LinearRegression
+
+def fit_polynomial(x, y, degree):
+    model = LinearRegression()
+    model.fit(np.vander(x, degree + 1), y)
+    return model
+
+def apply_polynomial(model, x):
+    degree = model.coef_.size - 1
+    y = model.predict(np.vander(x, degree + 1))
+    return y
+
+
+# In[14]:
+
+get_ipython().magic(u'matplotlib inline')
+import numpy as np
+import pylab as pl
+from numpy.linalg import norm
 def generate_trade_off_graph(nsamples,nmodels,maxdegrees):
     n_samples = nsamples
     f_x, f_y = f(n_samples)
@@ -66,29 +85,29 @@ def generate_trade_off_graph(nsamples,nmodels,maxdegrees):
 
 # ## Changing the number of samples
 
-# In[38]:
+# In[15]:
 
 generate_trade_off_graph(15,100,15)
 
 
-# In[39]:
+# In[16]:
 
 generate_trade_off_graph(50,100,15)
 
 
-# In[16]:
+# In[17]:
 
 generate_trade_off_graph(100,100,15)
 
 
 # ## Changing number of models
 
-# In[40]:
+# In[18]:
 
 generate_trade_off_graph(15,100,15)
 
 
-# In[41]:
+# In[19]:
 
 generate_trade_off_graph(15,200,15)
 
